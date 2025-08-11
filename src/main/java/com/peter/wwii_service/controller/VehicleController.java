@@ -12,11 +12,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/vehicles")
-@RequiredArgsConstructor
 @Slf4j
 public class VehicleController {
 
     private final VehicleService vehicleService;
+
+    public VehicleController(VehicleService vehicleService) {
+        this.vehicleService = vehicleService;
+    }
 
     @GetMapping
     public ResponseEntity<List<Vehicle>> getAllVehicles() {
@@ -40,5 +43,22 @@ public class VehicleController {
         Vehicle newVehicle = vehicleService.createVehicle(vehicle, countryId);
 
         return ResponseEntity.ok(newVehicle);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Vehicle> updateVehicle(
+            @PathVariable("id") Long id,
+            @RequestBody Vehicle vehicle
+    ) {
+        Vehicle updatedVehicle = vehicleService.updateVehicle(id, vehicle);
+
+        return ResponseEntity.ok(updatedVehicle);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteVehicle(@PathVariable("id") Long id) {
+        vehicleService.deleteVehicle(id);
+
+        return ResponseEntity.ok("Vehicle with id: " + id + " deleted successfully!");
     }
 }

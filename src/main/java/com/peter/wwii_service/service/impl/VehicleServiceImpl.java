@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -79,12 +78,11 @@ public class VehicleServiceImpl implements VehicleService {
 
     @Override
     @Transactional
-    public String deleteVehicle(Long id) {
+    public void deleteVehicle(Long id) {
         Vehicle vehicle = vehicleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Vehicle with id: " + id + " not found!"));
 
         vehicleRepository.deleteById(id);
 
-        return "Vehicle with id: " + id + " deleted successfully!";
     }
 }
