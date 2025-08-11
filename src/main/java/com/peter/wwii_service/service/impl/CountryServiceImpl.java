@@ -31,16 +31,24 @@ public class CountryServiceImpl implements CountryService {
         return countryRepository.save(country);
     }
 
+    public Country updateCountry(Long id, Country country) {
+        Country existingCountry = countryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Country not found with id: " + id));
+
+        existingCountry.setName(country.getName());
+        existingCountry.setDescription(country.getDescription());
+        existingCountry.setSide(country.getSide());
+
+        return countryRepository.save(existingCountry);
+    }
+
     @Transactional
     public String deleteCountry(Long id) {
-        log.info("Deleting country with id: {}", id);
+        Country existingCountry = countryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Country with id: " + id + " not found!"));
 
-        if (!countryRepository.existsById(id)) {
-            System.out.println("Country not found with id: " + id);
-        }
+        countryRepository.delete(existingCountry);
 
-        countryRepository.deleteById(id);
-        log.info("Country deleted successfully with id: {}", id);
         return "Country with id: " + id + " deleted successfully!";
     }
 }

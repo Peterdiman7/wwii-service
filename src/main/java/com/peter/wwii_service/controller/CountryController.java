@@ -74,6 +74,15 @@ public class CountryController {
         }
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<Country> updateCountry(
+            @PathVariable("id") Long id,
+            @RequestBody Country country) {
+
+        Country updatedCountry = countryService.updateCountry(id, country);
+        return ResponseEntity.ok(updatedCountry);
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<Map<String, String>> deleteCountry(@PathVariable("id") Long id) {
         String message = countryService.deleteCountry(id);

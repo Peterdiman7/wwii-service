@@ -9,5 +9,6 @@ public interface CountryService {
     List<Country> getAllCountries();
     Optional<Country> getCountryById(Long id);
     Country createCountry(Country country);
+    Country updateCountry(Long id, Country country);
     String deleteCountry(Long id);
 }
