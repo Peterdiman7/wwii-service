@@ -56,34 +56,14 @@ public class FigureController {
     }
 
     @PostMapping("/country/{countryId}")
-    public ResponseEntity<?> createFigure(@PathVariable Long countryId,
-                                          @Valid @RequestBody Figure figure) {
-        try {
-            log.info("POST /api/figures/country/{} - Creating figure: {}", countryId, figure.getName());
+    public ResponseEntity<Figure> createFigure(
+            @PathVariable Long countryId,
+            @Valid @RequestBody Figure figure) {
 
-            // Validate required fields
-            if (figure.getName() == null || figure.getName().trim().isEmpty()) {
-                log.warn("Figure creation failed: Name is required");
-                return ResponseEntity.badRequest().body(Map.of("error", "Name is required"));
-            }
-            if (figure.getSide() == null) {
-                log.warn("Figure creation failed: Side is required");
-                return ResponseEntity.badRequest().body(Map.of("error", "Side is required"));
-            }
-
-            Figure savedFigure = figureService.createFigure(figure, countryId);
-            log.info("Figure created successfully with id: {}", savedFigure.getId());
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedFigure);
-
-        } catch (RuntimeException e) {
-            log.error("Error creating figure: {}", e.getMessage());
-            return ResponseEntity.badRequest().body(Map.of("error", e.getMessage()));
-        } catch (Exception e) {
-            log.error("Unexpected error creating figure: {}", e.getMessage());
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Map.of("error", "Failed to create figure: " + e.getMessage()));
-        }
+        Figure savedFigure = figureService.createFigure(figure, countryId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedFigure);
     }
+
 
     @PostMapping
     public ResponseEntity<?> createFigureWithCountryInBody(@Valid @RequestBody CreateFigureRequest request) {

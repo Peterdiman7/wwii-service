@@ -39,17 +39,25 @@ public class FigureServiceImpl implements FigureService {
     public Figure createFigure(Figure figure, Long countryId) {
         log.info("Creating figure: {} for country id: {}", figure.getName(), countryId);
 
-        // Find the country
+        // Validate
+        if (figure.getName() == null || figure.getName().trim().isEmpty()) {
+            throw new IllegalArgumentException("Name is required");
+        }
+        if (figure.getSide() == null) {
+            throw new IllegalArgumentException("Side is required");
+        }
+
+        // Find country
         Country country = countryRepository.findById(countryId)
                 .orElseThrow(() -> new RuntimeException("Country not found with id: " + countryId));
 
-        // Set the country for the figure
+        // Assign country
         figure.setCountry(country);
 
-        // Save the figure
+        // Save
         Figure savedFigure = figureRepository.save(figure);
-
         log.info("Figure created successfully with id: {}", savedFigure.getId());
+
         return savedFigure;
     }
 

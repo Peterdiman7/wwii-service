@@ -28,6 +28,11 @@ public class Country {
     @JsonManagedReference
     private List<Figure> figures = new ArrayList<>();
 
+    // One Country can have many Vehicles
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Vehicle> vehicles = new ArrayList<>();
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Side must be either ALLIES, AXIS or NEUTRAL!")
     private Side side;
@@ -40,5 +45,15 @@ public class Country {
     public void removeFigure(Figure figure) {
         figures.remove(figure);
         figure.setCountry(null);
+    }
+
+    public void addVehicle(Vehicle vehicle) {
+        vehicles.add(vehicle);
+        vehicle.setCountry(this);
+    }
+
+    public void removeVehicle(Vehicle vehicle) {
+        vehicles.remove(vehicle);
+        vehicle.setCountry(null);
     }
 }
