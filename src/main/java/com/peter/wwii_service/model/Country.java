@@ -33,6 +33,11 @@ public class Country {
     @JsonManagedReference
     private List<Vehicle> vehicles = new ArrayList<>();
 
+    // One Country can have many Battles
+    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Battle> battles = new ArrayList<>();
+
     private String imgUrl;
 
     @Enumerated(EnumType.STRING)
