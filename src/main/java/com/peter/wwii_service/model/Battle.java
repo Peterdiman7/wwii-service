@@ -1,6 +1,7 @@
 package com.peter.wwii_service.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
@@ -28,7 +29,7 @@ public class Battle {
 
     // Many-to-Many relationship with Country
     @ManyToMany(mappedBy = "battles", fetch = FetchType.LAZY)
-    @JsonBackReference("country-battles")  // Match the named reference in Country
+    @JsonIgnoreProperties({"battles", "figures", "vehicles"})  // Prevent circular references
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Country> countries = new ArrayList<>();

@@ -1,5 +1,6 @@
 package com.peter.wwii_service.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -46,7 +47,7 @@ public class Country {
             joinColumns = @JoinColumn(name = "country_id"),
             inverseJoinColumns = @JoinColumn(name = "battle_id")
     )
-    @JsonManagedReference("country-battles")  // Named reference for battles
+    @JsonIgnore  // Ignore this side to prevent circular reference
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Battle> battles = new ArrayList<>();
