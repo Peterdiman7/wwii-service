@@ -33,6 +33,8 @@ public class Country {
     @JsonManagedReference
     private List<Vehicle> vehicles = new ArrayList<>();
 
+    private String imgUrl;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Side must be either ALLIES, AXIS or NEUTRAL!")
     private Side side;

@@ -38,6 +38,7 @@ public class CountryServiceImpl implements CountryService {
         existingCountry.setName(country.getName());
         existingCountry.setDescription(country.getDescription());
         existingCountry.setSide(country.getSide());
+        existingCountry.setImgUrl(country.getImgUrl());
 
         return countryRepository.save(existingCountry);
     }

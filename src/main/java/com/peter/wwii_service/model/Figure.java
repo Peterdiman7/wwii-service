@@ -24,6 +24,8 @@ public class Figure {
     @NotNull(message = "Side must be either ALLIES, AXIS or NEUTRAL!")
     private Side side;
 
+    private String imgUrl;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
     @JsonBackReference

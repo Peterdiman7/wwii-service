@@ -73,6 +73,7 @@ public class FigureServiceImpl implements FigureService {
         existingFigure.setName(updatedFigure.getName());
         existingFigure.setDescription(updatedFigure.getDescription());
         existingFigure.setSide(updatedFigure.getSide());
+        existingFigure.setImgUrl(updatedFigure.getImgUrl());
 
         Figure savedFigure = figureRepository.save(existingFigure);
         log.info("Figure updated successfully with id: {}", savedFigure.getId());

@@ -36,23 +36,26 @@ public class VehicleServiceImpl implements VehicleService {
     @Override
     @Transactional
     public Vehicle createVehicle(Vehicle vehicle, Long countryId) {
-        log.info("Creating vehicle: ");
+        log.info("Creating vehicle: {}", vehicle.getName());
 
-        // Validate
+        // Validate basic fields
         if (vehicle.getName() == null || vehicle.getName().trim().isEmpty()) {
             throw new IllegalArgumentException("Name is required");
         }
-        if (vehicle.getCountry() == null) {
-            throw new IllegalArgumentException("Country is required");
+        if (vehicle.getVehicleType() == null) {
+            throw new IllegalArgumentException("Vehicle type is required");
         }
 
+        // Find and validate country - this should come BEFORE setting it on vehicle
         Country country = countryRepository.findById(countryId)
                 .orElseThrow(() -> new RuntimeException("Country with id: " + countryId + " not found!"));
 
+        // Set the country on the vehicle
         vehicle.setCountry(country);
 
+        // Save the vehicle
         Vehicle savedVehicle = vehicleRepository.save(vehicle);
-        log.info("Figure created successfully with id: {}", savedVehicle.getId());
+        log.info("Vehicle created successfully with id: {}", savedVehicle.getId());
 
         return savedVehicle;
     }
@@ -83,6 +86,6 @@ public class VehicleServiceImpl implements VehicleService {
                 .orElseThrow(() -> new RuntimeException("Vehicle with id: " + id + " not found!"));
 
         vehicleRepository.deleteById(id);
-
+        log.info("Vehicle deleted successfully with id: {}", id);
     }
 }
