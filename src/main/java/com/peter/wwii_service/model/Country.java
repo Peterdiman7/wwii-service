@@ -27,14 +27,14 @@ public class Country {
 
     // One Country can have many Figures
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference("country-figures")  // Named reference for figures
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Figure> figures = new ArrayList<>();
 
     // One Country can have many Vehicles
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JsonManagedReference
+    @JsonManagedReference("country-vehicles")  // Named reference for vehicles
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Vehicle> vehicles = new ArrayList<>();
@@ -46,7 +46,7 @@ public class Country {
             joinColumns = @JoinColumn(name = "country_id"),
             inverseJoinColumns = @JoinColumn(name = "battle_id")
     )
-    @JsonManagedReference
+    @JsonManagedReference("country-battles")  // Named reference for battles
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Battle> battles = new ArrayList<>();

@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
-import org.hibernate.annotations.Fetch;
 
 @Entity
 @Data
@@ -23,7 +22,7 @@ public class Vehicle {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("country-vehicles")  // Match the named reference in Country
     private Country country;
 
     @Enumerated(EnumType.STRING)

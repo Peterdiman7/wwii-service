@@ -28,7 +28,7 @@ public class Battle {
 
     // Many-to-Many relationship with Country
     @ManyToMany(mappedBy = "battles", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @JsonBackReference("country-battles")  // Match the named reference in Country
     @ToString.Exclude
     @EqualsAndHashCode.Exclude
     private List<Country> countries = new ArrayList<>();

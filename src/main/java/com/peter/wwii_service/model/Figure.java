@@ -28,6 +28,6 @@ public class Figure {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "country_id", referencedColumnName = "id")
-    @JsonBackReference
+    @JsonBackReference("country-figures")  // Match the named reference in Country
     private Country country;
 }

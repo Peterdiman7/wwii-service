@@ -48,7 +48,7 @@ public class CountryController {
         }
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     public ResponseEntity<?> createCountry(@RequestBody Country country) {
         try {
             System.out.printf("POST /api/countries - Creating countries: %s", country.getName());
