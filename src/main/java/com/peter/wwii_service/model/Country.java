@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,16 +28,27 @@ public class Country {
     // One Country can have many Figures
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Figure> figures = new ArrayList<>();
 
     // One Country can have many Vehicles
     @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JsonManagedReference
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Vehicle> vehicles = new ArrayList<>();
 
-    // One Country can have many Battles
-    @OneToMany(mappedBy = "country", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    // Many-to-Many relationship with Battle (owning side)
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "country_battle",
+            joinColumns = @JoinColumn(name = "country_id"),
+            inverseJoinColumns = @JoinColumn(name = "battle_id")
+    )
     @JsonManagedReference
+    @ToString.Exclude
+    @EqualsAndHashCode.Exclude
     private List<Battle> battles = new ArrayList<>();
 
     private String imgUrl;
@@ -62,5 +75,17 @@ public class Country {
     public void removeVehicle(Vehicle vehicle) {
         vehicles.remove(vehicle);
         vehicle.setCountry(null);
+    }
+
+    public void addBattle(Battle battle) {
+        if (!battles.contains(battle)) {
+            battles.add(battle);
+            battle.getCountries().add(this);
+        }
+    }
+
+    public void removeBattle(Battle battle) {
+        battles.remove(battle);
+        battle.getCountries().remove(this);
     }
 }
