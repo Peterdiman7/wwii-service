@@ -90,6 +90,7 @@ public class FigureController {
             figure.setName(request.getName());
             figure.setDescription(request.getDescription());
             figure.setSide(request.getSide());
+            figure.setImgUrl(request.getImgUrl());
 
             Figure savedFigure = figureService.createFigure(figure, request.getCountryId());
             log.info("Figure created successfully with id: {}", savedFigure.getId());
@@ -115,6 +116,9 @@ public class FigureController {
         @jakarta.validation.constraints.NotNull(message = "Side is required")
         private Side side;
 
+        @jakarta.validation.constraints.NotNull(message = "Image is required")
+        private String imgUrl;
+
         @jakarta.validation.constraints.NotNull(message = "Country ID is required")
         private Long countryId;
 
@@ -127,6 +131,9 @@ public class FigureController {
 
         public Side getSide() { return side; }
         public void setSide(Side side) { this.side = side; }
+
+        public String getImgUrl() { return imgUrl; }
+        public void setImgUrl(String imgUrl) { this.imgUrl = imgUrl; }
 
         public Long getCountryId() { return countryId; }
         public void setCountryId(Long countryId) { this.countryId = countryId; }

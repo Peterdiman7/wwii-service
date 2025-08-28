@@ -12,5 +12,6 @@ public enum VehicleType {
         UTILITY_CAR,
         MOTORCYCLE,
         AMPHIBIOUS_VEHICLE,
-        ENGINEERING_VEHICLE
+        ENGINEERING_VEHICLE,
+        AIRCRAFT
 }

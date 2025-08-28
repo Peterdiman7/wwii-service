@@ -25,6 +25,8 @@ public class Vehicle {
     @JsonBackReference("country-vehicles")  // Match the named reference in Country
     private Country country;
 
+    private String imgUrl;
+
     @Enumerated(EnumType.STRING)
     @NotNull(message = "You need to enter valid Vehicle Type!")
     private VehicleType vehicleType;
